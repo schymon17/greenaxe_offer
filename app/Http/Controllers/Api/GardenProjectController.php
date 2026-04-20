@@ -21,9 +21,10 @@ class GardenProjectController extends Controller
         $data = $request->validate([
             'client_id' => ['required', 'integer', 'exists:clients,id'],
             'name' => ['required', 'string', 'max:255'],
-            'location' => ['nullable', 'string', 'max:255'],
+            'street' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'postal_code' => ['nullable', 'string', 'max:20'],
             'area_m2' => ['nullable', 'numeric', 'min:0'],
-            'style' => ['nullable', 'string', 'max:255'],
             'status' => ['nullable', 'string', 'max:64'],
             'description' => ['nullable', 'string'],
         ]);
@@ -41,9 +42,10 @@ class GardenProjectController extends Controller
         $data = $request->validate([
             'client_id' => ['sometimes', 'required', 'integer', 'exists:clients,id'],
             'name' => ['sometimes', 'required', 'string', 'max:255'],
-            'location' => ['nullable', 'string', 'max:255'],
+            'street' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'postal_code' => ['nullable', 'string', 'max:20'],
             'area_m2' => ['nullable', 'numeric', 'min:0'],
-            'style' => ['nullable', 'string', 'max:255'],
             'status' => ['nullable', 'string', 'max:64'],
             'description' => ['nullable', 'string'],
         ]);

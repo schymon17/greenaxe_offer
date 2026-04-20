@@ -15,8 +15,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::apiResource('clients', ClientController::class);
-    Route::apiResource('garden-projects', GardenProjectController::class);
-    Route::apiResource('offers', OfferController::class);
-    Route::apiResource('cost-items', CostItemController::class);
+    Route::apiResource('clients', ClientController::class)->names('api.clients');
+    Route::apiResource('garden-projects', GardenProjectController::class)->names('api.garden-projects');
+    Route::apiResource('offers', OfferController::class)->names('api.offers');
+    Route::apiResource('cost-items', CostItemController::class)->names('api.cost-items');
 });

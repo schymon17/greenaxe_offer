@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Greenaxe Offer</title>
+    <title>Logowanie - Greenaxe CRM</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -29,23 +29,25 @@
         .login-box {
             background: white;
             border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             padding: 40px;
+            border: 1px solid rgba(22, 163, 74, 0.1);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .header h1 {
             font-size: 28px;
-            color: #333;
-            margin-bottom: 10px;
+            color: #16a34a;
+            margin-bottom: 8px;
+            font-weight: 700;
         }
 
         .header p {
-            color: #666;
+            color: #6b7280;
             font-size: 14px;
         }
 
@@ -56,8 +58,8 @@
         label {
             display: block;
             margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
+            color: #374151;
+            font-weight: 600;
             font-size: 14px;
         }
 
@@ -65,21 +67,33 @@
         input[type="password"] {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
             font-size: 14px;
-            transition: border-color 0.3s;
+            transition: all 0.2s;
+            background: white;
+            font-family: inherit;
         }
 
         input[type="email"]:focus,
         input[type="password"]:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
         }
 
         .error-message {
-            color: #e74c3c;
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .form-error {
+            color: #dc2626;
             font-size: 13px;
             margin-top: 5px;
         }
@@ -87,62 +101,36 @@
         .btn-login {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #16a34a;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.2s;
         }
 
         .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            background: #15803d;
         }
 
         .btn-login:active {
-            transform: translateY(0);
+            transform: scale(0.98);
         }
 
-        .divider {
-            margin: 25px 0;
-            position: relative;
+        .footer-text {
             text-align: center;
-            color: #999;
-            font-size: 13px;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            width: 100%;
-            height: 1px;
-            background: #ddd;
-        }
-
-        .divider span {
-            background: white;
-            padding: 0 10px;
-            position: relative;
-        }
-
-        .api-hint {
-            background: #f0f7ff;
-            border: 1px solid #d4e6f1;
-            border-radius: 4px;
-            padding: 12px;
-            color: #2c3e50;
+            margin-top: 30px;
+            color: #6b7280;
             font-size: 12px;
-            line-height: 1.5;
-            margin-top: 20px;
+            line-height: 1.6;
         }
 
-        .api-hint strong {
-            color: #667eea;
+        .footer-text a {
+            color: #16a34a;
+            text-decoration: none;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -150,13 +138,13 @@
     <div class="container">
         <div class="login-box">
             <div class="header">
-                <h1>🌱 Greenaxe Offer</h1>
-                <p>Garden Project Estimator</p>
+                <h1>Greenaxe</h1>
+                <p>CRM Zarządzania Projektami Ogrodów</p>
             </div>
 
             @if ($errors->any())
-                <div style="background: #ffe5e5; border: 1px solid #ffb3b3; color: #c41e3a; padding: 12px; border-radius: 4px; margin-bottom: 20px; font-size: 13px;">
-                    {{ $errors->first() }}
+                <div class="error-message">
+                    ✗ {{ $errors->first() }}
                 </div>
             @endif
 
@@ -164,51 +152,44 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="email">Email Address</label>
+                    <label for="email">Email</label>
                     <input
                         type="email"
                         id="email"
                         name="email"
                         value="{{ old('email') }}"
                         required
-                        placeholder="hello@jirasoft.pl"
+                        placeholder="Wpisz adres email"
+                        autocomplete="email"
                     />
                     @error('email')
-                        <div class="error-message">{{ $message }}</div>
+                        <div class="form-error">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Hasło</label>
                     <input
                         type="password"
                         id="password"
                         name="password"
                         required
-                        placeholder="Enter password"
+                        placeholder="Wpisz hasło"
+                        autocomplete="current-password"
                     />
                     @error('password')
-                        <div class="error-message">{{ $message }}</div>
+                        <div class="form-error">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <button type="submit" class="btn-login">Sign In</button>
+                <button type="submit" class="btn-login">Zaloguj się</button>
             </form>
 
-            <div class="api-hint">
-                <strong>Demo Credentials:</strong><br>
-                Email: hello@jirasoft.pl<br>
-                Password: admin123
-            </div>
-
-            <div class="divider">
-                <span>or use API</span>
-            </div>
-
-            <div class="api-hint">
-                <strong>API Endpoint:</strong><br>
-                POST /api/login<br>
-                Body: { "email": "hello@jirasoft.pl", "password": "admin123" }
+            <div class="footer-text">
+                <p>Greenaxe CRM - profesjonalny system zarządzania projektami ogrodów.</p>
+                <p style="margin-top: 10px;">
+                    Potrzebujesz konta? <a href="#contact">Skontaktuj się z nami</a>
+                </p>
             </div>
         </div>
     </div>

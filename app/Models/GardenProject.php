@@ -11,9 +11,10 @@ class GardenProject extends Model
     protected $fillable = [
         'client_id',
         'name',
-        'location',
+        'street',
+        'city',
+        'postal_code',
         'area_m2',
-        'style',
         'status',
         'description',
     ];
@@ -30,5 +31,10 @@ class GardenProject extends Model
     public function offers(): HasMany
     {
         return $this->hasMany(Offer::class);
+    }
+
+    public function sections(): HasMany
+    {
+        return $this->hasMany(GardenSection::class)->orderBy('order');
     }
 }
