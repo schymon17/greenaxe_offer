@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class GardenSection extends Model
 {
@@ -14,11 +15,26 @@ class GardenSection extends Model
         'description',
         'canvas_data',
         'order',
+        'public_token',
     ];
 
     protected $casts = [
         'canvas_data' => 'array',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (!$model->public_token) {
+                do {
+                    $token = Str::random(32);
+                } while (static::where('public_token', $token)->exists());
+                $model->public_token = $token;
+            }
+        });
+    }
 
     public function gardenProject(): BelongsTo
     {

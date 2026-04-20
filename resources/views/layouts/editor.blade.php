@@ -151,24 +151,97 @@
             overflow: hidden;
         }
         .canvas-toolbar {
-            display: flex; align-items: center; gap: 6px;
-            padding: 8px 12px; background: #0f172a;
-            border-bottom: 1px solid #1e293b; flex-wrap: wrap;
-            flex-shrink: 0;
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 10px;
+            padding: 8px 6px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+            min-width: 148px;
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
         }
         .tool-btn {
-            padding: 5px 11px; border: 1px solid #334155; border-radius: 5px;
+            padding: 7px 12px; border: 1px solid #334155; border-radius: 6px;
             background: #1e293b; cursor: pointer; font-size: 12px; font-weight: 600;
             color: #94a3b8; transition: all 0.15s; white-space: nowrap;
+            text-align: left; width: 100%;
         }
         .tool-btn:hover { border-color: #16a34a; color: #4ade80; }
         .tool-btn.active { border-color: #16a34a; background: #14532d; color: #4ade80; }
-        .tool-sep { width: 1px; height: 22px; background: #334155; margin: 0 3px; }
+        .tool-group-label {
+            font-size: 9px;
+            font-weight: 700;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            padding: 4px 6px 2px;
+        }
+        .tool-sep { height: 1px; background: #1e293b; margin: 3px 0; }
         .color-swatch { width: 22px; height: 22px; border-radius: 4px; cursor: pointer; border: 2px solid transparent; }
         .color-swatch.active { border-color: white !important; }
-        #canvas-wrap { flex: 1; overflow: hidden; position: relative; cursor: crosshair; }
+        .color-row { display: flex; flex-wrap: wrap; gap: 4px; padding: 2px 4px 4px; }
+        .scale-row { display: flex; align-items: center; gap: 4px; padding: 2px 4px 4px; }
+        .scale-row input { flex: 1; min-width: 0; padding: 4px 6px; border: 1px solid #334155; border-radius: 5px; background: #0f172a; color: #e2e8f0; font-size: 11px; }
+        .scale-row span { font-size: 10px; color: #64748b; flex-shrink: 0; }
+        #canvas-wrap { flex: 1; overflow: hidden; position: relative; cursor: grab; }
         canvas#garden-canvas { display: block; }
         .canvas-hint { font-size: 11px; color: #64748b; padding: 5px 12px; background: #0f172a; border-top: 1px solid #1e293b; flex-shrink: 0; }
+
+        /* Mobile UI Mode - Larger buttons, simplified toolbar */
+        body.mobile-ui-mode .canvas-toolbar {
+            min-width: 200px;
+            max-height: calc(100vh - 100px);
+        }
+        body.mobile-ui-mode .tool-btn {
+            padding: 12px 14px;
+            font-size: 14px;
+            font-weight: 700;
+            min-height: 48px;
+            line-height: 1.2;
+        }
+        body.mobile-ui-mode .tool-group-label {
+            font-size: 11px;
+            padding: 8px 6px 3px;
+            margin-top: 8px;
+        }
+        body.mobile-ui-mode .tool-sep {
+            margin: 8px 0;
+            height: 2px;
+            background: #334155;
+        }
+        body.mobile-ui-mode #tool-measure,
+        body.mobile-ui-mode #tool-lock-zone,
+        body.mobile-ui-mode #tool-main-zone,
+        body.mobile-ui-mode #mode-length,
+        body.mobile-ui-mode .scale-row,
+        body.mobile-ui-mode #layout-area-info,
+        body.mobile-ui-mode #tool-open-panel,
+        body.mobile-ui-mode #layout-current,
+        body.mobile-ui-mode #layout-modified {
+            display: none !important;
+        }
+        body.mobile-ui-mode .mobile-gps-controls {
+            display: block !important;
+        }
+        body.mobile-ui-mode .tool-btn.mobile-gps-controls {
+            min-height: 48px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        body.mobile-ui-mode .right-panel {
+            display: none !important;
+        }
+        body.mobile-ui-mode .color-swatch {
+            width: 36px;
+            height: 36px;
+        }
     </style>
 </head>
 <body>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\GardenSectionCanvasUpdated;
 use App\Models\GardenProject;
 use App\Models\GardenSection;
 use App\Models\SectionElement;
@@ -31,6 +32,15 @@ class GardenSectionController extends Controller
         return view('garden-sections.editor', compact('gardenProject', 'gardenSection'));
     }
 
+    public function publicDraw($token)
+    {
+        $gardenSection = GardenSection::where('public_token', $token)->firstOrFail();
+        $gardenSection->load('elements');
+        $gardenProject = $gardenSection->gardenProject;
+        
+        return view('garden-sections.public-draw', compact('gardenProject', 'gardenSection'));
+    }
+
     public function update(Request $request, GardenProject $gardenProject, GardenSection $gardenSection)
     {
         $data = $request->validate([
@@ -47,9 +57,16 @@ class GardenSectionController extends Controller
     {
         $data = $request->validate([
             'canvas_data' => 'required|array',
+            'client_id' => 'nullable|string|max:120',
         ]);
 
         $gardenSection->update(['canvas_data' => $data['canvas_data']]);
+
+        GardenSectionCanvasUpdated::dispatch(
+            $gardenSection->id,
+            $data['canvas_data'],
+            $data['client_id'] ?? null
+        );
 
         return response()->json(['ok' => true]);
     }

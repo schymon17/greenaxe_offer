@@ -10,6 +10,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/draw/{token}', [GardenSectionController::class, 'publicDraw'])->name('garden-sections.public-draw');
+
 Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
